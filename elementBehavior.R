@@ -55,3 +55,48 @@ barPlot.littAdd <- ggplot(data = dat.littAdd,
   theme(panel.grid = element_blank(),
         legend.position = "none")
 
+dat.sel <- dplyr::filter(dat.sel, littAdd == "Litter-Added")
+dat.sdem <- dplyr::group_by(dat.sel, sedmMark) %>% 
+  summarise(mean = mean(trait,na.rm = T), se = (sd(trait,na.rm = T)/sqrt(3)))
+barPlot.sdem <- ggplot(data = dat.sdem, 
+                       aes(x = sedmMark, y = mean, ymax = mean+se, ymin = mean-se,
+                           fill = sedmMark)) + 
+  geom_bar(position = "dodge",stat = "identity") +
+  geom_errorbar(stat = "identity", col = "black", 
+                width = 0.25, size = 0.3) +
+  xlab("") + ylab("AVS(mg/kg)") +
+  #scale_fill_manual(values = c("grey70","grey30")) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank(),
+        legend.position = "none") 
+
+dat.litt <- dplyr::group_by(dat.sel, littMark) %>% 
+  summarise(mean = mean(trait,na.rm = T), se = (sd(trait,na.rm = T)/sqrt(3)))
+barPlot.litt <- ggplot(data = dat.litt, 
+                       aes(x = littMark, y = mean, ymax = mean+se, ymin = mean-se,
+                           fill = littMark)) + 
+  geom_bar(position = "dodge",stat = "identity") +
+  geom_errorbar(stat = "identity", col = "black", 
+                width = 0.25, size = 0.3) +
+  xlab("") + ylab("AVS(mg/kg)") +
+  #scale_fill_manual(values = c("grey70","grey30")) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank(),
+        legend.position = "none") 
+
+dat.source <- dplyr::group_by(dat.sel, littSource) %>% 
+  summarise(mean = mean(trait,na.rm = T), se = (sd(trait,na.rm = T)/sqrt(3)))
+barPlot.source <- ggplot(data = dat.source,
+                         aes(x = littSource, y = mean, ymax = mean+se, ymin = mean-se, 
+                             fill = littSource)) + 
+  geom_bar(position = "dodge",stat = "identity") +
+  geom_errorbar(stat = "identity", col = "black", 
+                width = 0.25, size = 0.3) +
+  xlab("") + ylab("AVS(mg/kg)") +
+  #scale_fill_manual(values = c("grey70","grey30")) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank(),
+        legend.position = "none") 
+
+
+
